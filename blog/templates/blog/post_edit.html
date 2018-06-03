@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load staticfiles %}
 {% block head %}
 <!--
 {% endblock %} -->
@@ -10,7 +11,7 @@ Edition {{ post.title }}
 <div class="marge">
     <h1>Nouveau post</h1>
 	{% if user.is_authenticated %}
-    <form method="POST" class="post-form">{% csrf_token %}
+    <form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
     {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>
     </form>

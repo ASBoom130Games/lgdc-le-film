@@ -5,8 +5,8 @@ from precise_bbcode.fields import BBCodeTextField
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
-    #image = models.ImageField(upload_to = 'image', default = 'image/affiche-warriors-movie.jpeg')
-    image_lien = models.CharField(max_length=400, default = 'http://www.croiseedesclans.fr/medias/images/affiche-warriors-movie.jpeg')
+    #image = models.ImageField(upload_to = 'image/', default = 'image/affiche-warriors-movie.jpeg' )
+    image_lien = models.CharField(max_length=400, default = 'https://pmcvariety.files.wordpress.com/2016/11/warriors-20161120_092416-med-ret.jpg?w=1000&h=563&crop=1')
     resume = models.CharField(max_length=100)
     text = BBCodeTextField()
     Publique = models.BooleanField(default=True)
