@@ -58,8 +58,15 @@ h4.marge {
                 </li>
             </ul>
             <ul class="navbar-nav nav-flex-icons">
-                <li class="nav-item">
-                    	{% if user.is_authenticated %}
+			<li class="nav-item">
+                {% if user.is_authenticated %}
+            <a class="nav-link waves-effect waves-light" data-toggle="modal" data-target="#ModalDanger"><i class="fa fa-user-times mr-1"></i> Déconnexion</a>  
+                  
+               {% endif %}	
+               </li>			   
+			   <li class="nav-item">
+         
+                    	{% if user.is_authenticated  and user.is_staff %}
 	                    <a href="{% url 'post_new' %}" class="nav-link waves-effect waves-light"><i class="fa fa-plus"></i></a>
 	                   {% endif %}
                 </li>
@@ -72,6 +79,7 @@ h4.marge {
 <br>
 <br>
 <br>
+{% include "blog/Déconnexion.html" %}
 	{% block content %}
     {% endblock %}
 <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/compiled.min.js"></script>

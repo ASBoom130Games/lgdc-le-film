@@ -1,4 +1,4 @@
-<!--Modal: Login / Register Form-->
+<!--------------------------------------------------------------- Connexion -------------------------------------------------------------------------------->
 <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal" role="document">
         <!--Content-->
@@ -23,7 +23,6 @@
                     <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
 
                         <!--Body-->
-						
                         <div class="modal-body mb-1">
 						<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
                                 {{ form.as_p }}
@@ -39,11 +38,10 @@
                             <div class="options text-center text-md-right mt-1">
                                 
                             </div>
-                            <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
+                            
                         </div>
 
                     </div>
-                    <!--/.Panel 7-->
 
                     <!--Panel 8-->
                     <div class="tab-pane fade" id="panel8" role="tabpanel">
@@ -60,14 +58,14 @@
 
                         </div>
                         <!--Footer-->
-
+<p class="pt-1">Déjà un compte ? <a data-toggle="tab" href="#panel7" role="tab" class="blue-text">Se connecter</a></p>
                         </div>
                         <!--Footer-->
                         <div class="modal-footer">
                             <div class="options text-right">
-                                <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
+                                <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Fermer</button>
                             </div>
-                            <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+                            
                         </div>
                     </div>
                     <!--/.Panel 8-->
@@ -78,8 +76,13 @@
         <!--/.Content-->
     </div>
 </div>
-<!--Modal: Login / Register Form-->
-
+<!---------------------------------------------------------------- Boutons --------------------------------------------------------------------------------->
 <div class="text-center">
+{% if user.is_authenticated %}
+    <a class="btn btn-danger btn-rounded my-3" data-toggle="modal" data-target="#ModalDanger"><i class="fa fa-user-times mr-1"></i> Déconnexion</a>                
+{% else %}
     <a href="" class="btn btn-info btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm"><i class="fa fa-user mr-1"></i> Se Connecter</a>
+{% endif %}
 </div>
+
+<!-------------------------------------------------------------- Déconnexion ------------------------------------------------------------------------------->
