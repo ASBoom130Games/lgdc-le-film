@@ -2,7 +2,7 @@
     <head>
     <meta name="description" content="Découvrez toute l'info du Film de la guerre des clans en français..." /> 
     <link rel="apple-touch-icon" href="images/slime.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>LGDC - {% block header %}
     {% endblock %}</title>
@@ -20,7 +20,7 @@
     font-weight: 300;
 }
     textarea {
-    height: 460;
+    height: {{ height }};
 	width: 1800;
 }
 	</style>
@@ -30,7 +30,11 @@
     float: right;
 }
 .marge {
-    margin-right: 150px;
+    margin-right: 9%;
+    margin-left: 80px;
+}
+.margecom {
+    margin-right: 85%;
     margin-left: 80px;
 }
 h4.marge {

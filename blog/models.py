@@ -25,7 +25,7 @@ class Post(models.Model):
 class Comment(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
-    text = BBCodeTextField()
+    text = BBCodeTextField(verbose_name=" Texte ")
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(
