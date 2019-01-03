@@ -1,11 +1,10 @@
 from django.contrib import admin
-from .models import Post, Comment
-from django.utils.text import Truncator
+from .models import Post, Comment, Categorie
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display   = ('title', 'apercu_contenu', 'published_date')
-    def apercu_contenu(self, text):
-        return Truncator(text.text).chars(20, truncate='...')
-		
+class CategorieAdmin(admin.ModelAdmin):
+   list_display   = ('nom',)
+   search_fields  = ('nom',)
+
 admin.site.register(Post)
-admin.site.register(Comment, CommentAdmin)
+admin.site.register(Comment)
+admin.site.register(Categorie, CategorieAdmin)

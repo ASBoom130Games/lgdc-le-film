@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from precise_bbcode.fields import BBCodeTextField
+from django.utils.safestring import mark_safe
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
@@ -14,18 +15,26 @@ class Post(models.Model):
             default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
-
+    categorie = models.ForeignKey('Categorie', on_delete=models.CASCADE)
+	
     def publish(self):
         self.published_date = timezone.now()
         self.save()
 
     def __str__(self):
         return self.title
-		
+
+class Categorie(models.Model):
+    nom = models.CharField(max_length=30)
+    color = models.CharField(max_length=30)
+    icon = models.CharField(max_length=30, help_text=mark_safe('Consultez la liste des logo possible <a href="https://fontawesome.com/icons?d=gallery">ici</a>'))
+    def __str__(self):
+         return self.nom
+		 
 class Comment(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
-    text = BBCodeTextField(verbose_name=" Texte ")
+    text = BBCodeTextField()
     created_date = models.DateTimeField(
             default=timezone.now)
     published_date = models.DateTimeField(

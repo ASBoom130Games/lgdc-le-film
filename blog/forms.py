@@ -1,12 +1,12 @@
 from django import forms
 
-from .models import Post, Comment
+from .models import Post
 
 class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'resume', 'image_lien', 'Publique', 'text')
+        fields = ('title', 'resume', 'image_lien', 'Publique', 'text', 'categorie')
 
 class ConnexionForm(forms.Form):
          username = forms.CharField(label="Nom d'utilisateur", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm validate'}))
@@ -21,9 +21,6 @@ class InscriptionForm(forms.Form):
          email = forms.CharField(label="Adresse email", max_length=60, widget=forms.TextInput(attrs={'class': 'form-control form-control-sm validate'}))
          password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
          password2 = forms.CharField(label="Répeter mot de passe", widget=forms.PasswordInput)
-
-class CommentForm(forms.ModelForm):
-
-    class Meta:
-        model = Comment
-        fields = ('text',)
+		 
+class CommentForm(forms.Form):
+         comment = forms.CharField(label="Commentaire", widget=forms.Textarea(attrs={'class': 'form-control rounded-0', 'rows': '10'}))

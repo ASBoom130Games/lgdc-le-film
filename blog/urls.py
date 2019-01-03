@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from . import views
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', views.post_list, name='post_list'),
@@ -8,4 +9,6 @@ urlpatterns = [
 	url(r'^post/new/$', views.post_new, name='post_new'),
 	url(r'^google311f29b3ed4bd3be.html', views.google, name='google'),
 	url(r'^deconnexion$', views.deconnexion, name='deconnexion'),
+	url(r'^Film$', views.film, name='film lgdc'),
+	url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
 ]
