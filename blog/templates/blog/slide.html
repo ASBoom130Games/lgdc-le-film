@@ -1,16 +1,20 @@
-        <!--First slide-->
-        <div class="carousel-item active">
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="img-fluid" src="{{ post.image_lien }}" alt="Card image cap">
-                    <div class="card-body">
-                        <h4 class="card-title">{{ post.title }}</h4>
-                        <p class="card-text">{{ post.resume }}</p>
-                        <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-primary">Lire la suite ></a>{% if user.is_authenticated %}<p style="float: right;">{% if post.Publique == True %}<p style="color:MediumSeaGreen;float: right;">Publique</p> {% else %}<p style="color:red;float: right;">Brouillon</p> {% endif %}{% endif %}
-                    </div>
+<!-- Colonne -->
+            <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
+                 <div class="rounded z-depth-2 mb-4">
+                <img class="img-fluid" src="{{ post.image_lien }}" alt="Image introuvable">
                 </div>
-            </div>
 
-        </div>
-        <!--/.First slide-->
+              <!-- Groupe -->
+              <p><a href="/{{ post.categorie.nom }}" class="{{ post.categorie.color }}-text"><h6 class="font-weight-bold mb-3"><i class="{{ post.categorie.icon }} pr-2"></i>{{ post.categorie.nom }}</h6></a></p>
+              <!-- Post title -->
+              <h4 class="font-weight-bold mb-3"><strong>{{ post.title }}</strong></h4>
+              <!-- Infos du post -->
+              <p>Article de <a class="font-weight-bold">{{ post.author.first_name }} {{ post.author.last_name }}</a>, {{ post.created_date.day }}/{% if post.created_date.month < 10 %}0{% endif %}{{ post.created_date.month }}/{{ post.created_date.year }}</p>
+              <!-- Excerpt -->
+			  <hr>
+              <p class="dark-grey-text">{{ post.resume }}</p>
+              <!-- Suite button -->
+              <a href="{% url 'post_detail' pk=post.pk %}" class="btn btn-{{ post.categorie.color }} btn btn-md waves-effect waves-light">Lire La suite</a>
+
+            </div>
+            <!--.\ Colonne news -->
