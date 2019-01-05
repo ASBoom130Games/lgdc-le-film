@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
-from .models import Post, Comment
+from .models import Post, Comment, Descriptions
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm, ConnexionForm, InscriptionForm, CommentForm
+from .forms import PostForm, ConnexionForm, InscriptionForm, CommentForm, DescriptionForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
@@ -11,6 +11,7 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     error = False
     errormdp = False
+    home = True
     if request.method == "POST":
          form = ConnexionForm(request.POST)
          new = InscriptionForm(request.POST)
@@ -41,12 +42,13 @@ def post_list(request):
     else:
          form = ConnexionForm(request.POST)
          new = InscriptionForm(request.POST)
-    return render(request, 'blog/post_list.html', {'posts': posts, 'form' : form, 'error':error, 'new' : new, 'errormdp' : errormdp})
+    return render(request, 'blog/post_list.html', {'posts': posts, 'form' : form, 'error':error, 'new' : new, 'errormdp' : errormdp, 'home':home})
 	
 def google(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 def post_detail(request, pk):
+    home = False
     for perso in User.objects.filter(username='Anonyme'):
 	    lol = perso
     post = get_object_or_404(Post, pk=pk)
@@ -109,11 +111,30 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form, 'height':height})
-	
+
+def description_edit(request, pk):
+    post = get_object_or_404(Descriptions, pk=pk)
+    if request.method == "POST":
+        form = DescriptionForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('/'+post.title)
+    else:
+        form = DescriptionForm(instance=post)
+    return render(request, 'blog/post_edit.html', {'form': form})
+			
 def deconnexion(request):
     logout(request)
     return redirect(reverse(post_list))
 	
 def film(request):
+    film = True
+    description = get_object_or_404(Descriptions, title="Film")
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'blog/film.html', {'posts': posts})
+    return render(request, 'blog/film.html', {'posts': posts, 'description':description, 'film':film})
+	
+def info(request):
+    description = get_object_or_404(Descriptions, title="Information")
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    return render(request, 'blog/film.html', {'posts': posts, 'description':description})

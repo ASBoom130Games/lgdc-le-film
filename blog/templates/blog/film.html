@@ -1,34 +1,17 @@
 {% extends 'blog/base.html' %} 
 {% load staticfiles %}
+{ %  load  bbcode_tags  % }
 {% block header %}   
-Accueil  
+Le Film 
 {% endblock %}
 {% block content %}  
-
-<h4 class="marge">La Guerre Des Clans : Le Film</h4>
-<p class="marge">Découvrez le film de la guerre des clans !
-<br>Toutes les infos, tout l’actus ? C’est ici ! Et en plus c’est en Français.
-
-<table class="table table-striped">
-    <tbody>
-      <tr>
-        <td>Producteur </td>
-        <td>David Heyman (Harry Potter et Paddington)</td>
-      </tr>
-      <tr>
-        <td>Société de production</td>
-        <td>Alibaba Pictures</td>
-      </tr>
-      <tr>
-        <td>Scénaristes</td>
-        <td>Jonathan Aibel et Glenn Berger</td>
-      </tr>
-	  <tr>
-        <td>Date de sortie</td>
-        <td>27/05/2020</td>
-      </tr>
-    </tbody>
-  </table>
+ {% if user.is_authenticated %}
+                                <div align="right">
+                                      <a class="btn btn-default waves-effect waves-light" href="{% url 'description_edit' pk=description.pk %}"><i class="fa fa-pencil"></i></a>
+		                         </div>
+		{% endif %}
+<p class="marge">
+{{ description.corp.rendered }}
 </p>
 <div class="marge">
 <br> <h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> News</h2>
@@ -37,7 +20,7 @@ Accueil
           <!-- News -->
           <div class="row">
      {% for post in posts %}
-	 {% if post.categorie.nom == "Film" %}
+	 {% if post.categorie.nom == description.title %}
             <!-- Colonne -->
             <div class="col-lg-4 col-md-12 mb-lg-0 mb-4">
                  <div class="rounded z-depth-2 mb-4">

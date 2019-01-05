@@ -30,7 +30,14 @@ class Categorie(models.Model):
     icon = models.CharField(max_length=30, help_text=mark_safe('Consultez la liste des logo possible <a href="https://fontawesome.com/icons?d=gallery">ici</a>'))
     def __str__(self):
          return self.nom
-		 
+
+class Descriptions(models.Model):
+     title = models.CharField(max_length=200, verbose_name="titre")
+     corp = BBCodeTextField(verbose_name="texte")
+     
+     def __str__(self):
+          return self.title
+		
 class Comment(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)

@@ -10,5 +10,7 @@ urlpatterns = [
 	url(r'^google311f29b3ed4bd3be.html', views.google, name='google'),
 	url(r'^deconnexion$', views.deconnexion, name='deconnexion'),
 	url(r'^Film$', views.film, name='film lgdc'),
-	url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
+	url(r'^Information$', views.info, name='info lgdc'),
+	url(r'^description/(?P<pk>[0-9]+)/$', views.description_edit, name='description_edit'),
+	#url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
 ]
