@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{ %  load  bbcode_tags  % }
+
+{% block header %}   
+ {{ livre.titre }}
+{% endblock %}
+
+{% block content %}
+<div class="marge">
+    <div class="post">
+	{% if user.is_authenticated %}
+		<div align="right">
+        <a class="btn btn-default" href="/admin/blog/livres/{{ livre.id }}/change/"><i class="fa fa-pencil"></i></a>
+		</div>
+		{% endif %}
+		
+        <h1>{{ livre.titre }}</h1>
+		<div style="background-color:#cce6ff" class="z-depth-3 imageflottante">
+		            <center>
+				         <div class="" style="background-color:#0073e6"> <em class="text-white font-weight-bold">{{ livre.titre }}</em></div>
+					<!-- </center> -->
+					</center>
+					<center>
+					     <img src="{{ livre.couverture }}"  width="auto" height="370">
+					</center>
+					<center>	     
+					      <div class="text-white font-weight-bold" style="background-color:#0073e6">Informations générales</div>
+					</center>
+					<div class="text-justify font-weight-lighter" style="width: 20rem;" ><div class="marge">
+					       <table>
+					                 <tr>
+                                          <td class="font-weight-bold">Auteur :</td>
+                                          <td>{{ livre.auteur}}</td>
+                                     </tr>
+									       <td style="color:cce6ff;"> a</td>
+                                          <td style="color:cce6ff;"> a</td>
+									 <tr>
+									 </tr>
+									 <tr>
+                                          <td class="font-weight-bold">date de parution anglaise : </td>
+                                          <td>{{ livre.date_en}}</td>
+                                     </tr>
+									</tr>
+									       <td style="color:cce6ff;"> a</td>
+                                          <td style="color:cce6ff;"> a</td>
+									 <tr>
+                                     <tr>
+                                          <td class="font-weight-bold">date de parution française : </td>
+                                          <td>{{ livre.date_fr}}</td>
+                                     </tr>
+					       </table>
+					</div></div> 
+					<center>	     
+					      <div class="text-white font-weight-bold" style="background-color:#0073e6">Quatrième de Couverture</div>
+					</center>
+					<!-- <center> -->
+					<div class="text-justify font-weight-lighter" style="width: 20rem;" ><div class="marge">{{ livre.quatrieme_de_couverture|linebreaksbr }}</div></div>    
+		            <!-- </center> -->
+		</div>
+		<p> {{ livre.description.rendered|linebreaksbr }} </p>
+    </div>
+
+{% endblock %}

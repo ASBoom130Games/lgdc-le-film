@@ -29,8 +29,9 @@
 <!---------------------------------------------------------------------------------------------------------Commentaires------------------------------------------------------------------------------------------------------------>
 	<hr>	
 <h1>Commentaires</h1>
-</div>
 
+ <div class="card-header border-0 font-weight-bold">{{ len }} commentaires</div>
+ </div>
 {% for commentaire in commentaires %}
 <div class="marge">
 <hr>
@@ -54,10 +55,9 @@
 
 </div>
 <div class="margecom">
-            <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
-                    <ul class="list-unstyled list-inline font-small">
-                                  <li class="list-inline-item pr-2 white-text"><i class="fa fa-clock-o pr-1"></i>{{commentaire.published_date}}</li>
-                    </ul>
+                     <div class="card-header border-0 font-weight-bold">
+                                  <li class="list-inline-item pr-2 black-text"><i class="fa fa-clock-o pr-1"></i>{{commentaire.published_date}}</li>
+                    
             </div>
 </div>	
 </div>

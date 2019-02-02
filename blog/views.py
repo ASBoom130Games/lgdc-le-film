@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from .models import Post, Comment, Descriptions
-from django.shortcuts import render, get_object_or_404
+from .models import Post, Comment, Descriptions, Livres, Cycle
 from .forms import PostForm, ConnexionForm, InscriptionForm, CommentForm, DescriptionForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage
+from django.utils.text import Truncator
+import datetime
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
@@ -53,10 +55,8 @@ def post_detail(request, pk):
 	    lol = perso
     post = get_object_or_404(Post, pk=pk)
     commentaires = Comment.objects.filter(article__title=post.title)
-    height = 200
-    #imagestr = str(post.image)
-    #image = imagestr.split('blog/static/')
-    #post.image = (image[1])
+    len = commentaires.count ()
+    resume = Truncator(post.text).chars(40, truncate='...')
     if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -78,7 +78,7 @@ def post_detail(request, pk):
     else:
         form = CommentForm(request.POST)
 		 
-    return render(request, 'blog/post_detail.html', {'post': post, 'form': form, 'height':height, 'commentaires':commentaires})
+    return render(request, 'blog/post_detail.html', {'post': post, 'form': form, 'commentaires':commentaires, 'len':len, 'resume':resume})
 
 def post_new(request):
     height = 460
@@ -130,11 +130,26 @@ def deconnexion(request):
 	
 def film(request):
     film = True
+    resume = "decouvrez toute l'info du film de la Guerre des Clans !"
     description = get_object_or_404(Descriptions, title="Film")
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
-    return render(request, 'blog/film.html', {'posts': posts, 'description':description, 'film':film})
+    return render(request, 'blog/film.html', {'posts': posts, 'description':description, 'film':film, 'resume':resume})
 	
 def info(request):
     description = get_object_or_404(Descriptions, title="Information")
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/film.html', {'posts': posts, 'description':description})
+	
+def serie(request):
+    serie = True
+    cycle = Cycle.objects.all
+    livres = Livres.objects.all
+    resume = "decouvrez toute l'info sur les livres de la Guerre des Clans !"
+    description = get_object_or_404(Descriptions, title="Serie")
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+    posts = posts.filter(published_date__gte=datetime.datetime(2018, 3, 18))
+    return render(request, 'blog/serie.html', {'posts': posts, 'description':description, 'serie':serie, 'cycle':cycle, 'livres':livres, 'resume':resume})
+
+def livre_details(request, pk, slug):
+    livre = get_object_or_404(Livres, pk=pk)
+    return render(request, 'blog/livre.html', {'livre': livre})	

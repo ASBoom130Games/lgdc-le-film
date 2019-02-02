@@ -12,7 +12,34 @@
 		{% endif %}
 <p class="marge">
 {{ description.corp.rendered }}
-</p>
+<br>
+     {% for cycle in cycle %}
+	 <!-- Card -->
+<div class="card card-image" style="background-image: url({{ cycle.image }});">
+
+  <!-- Content -->
+  <div class="text-white text-center d-flex align-items-center rgba-black-strong py-3 px-4">
+    <div>
+	  <h5 class="{{ cycle.color }}-text"><i class="fas fa-chart-pie"></i>{{ cycle.titre }}</h5>
+      <h3 class="card-title pt-2"><strong>{{ cycle.slogan }}</strong></h3>
+       <div class="text-center my-5"><div class="row">  
+	      <p>{% for livre in livres %}
+	         {% if livre.cycle.titre == cycle.titre %}
+	                <div class="col-md-2">
+	                          <img class="img-fluid" src="{{ livre.couverture }}" width="70%" height="auto" alt="Image introuvable">
+	                          <hr class="hr-light"><h5>Tome {{ livre.tome }} : {{ livre.titre }}</h5>
+	                          <a href="{% url 'livre_details' pk=livre.id slug=livre.slug %}" class="btn btn-{{ cycle.color }}"><i class="fa fa-book"></i>  Decouvrir</a>
+	                </div>
+	  {% endif %}
+	  {% endfor %}</p>
+	  </div></div>
+    </div>
+  </div>
+
+</div>
+<!-- Card -->
+	 {% endfor %}	
+	</p>
 <div class="marge">
 <br> <h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> News</h2>
 

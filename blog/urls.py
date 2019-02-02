@@ -11,6 +11,8 @@ urlpatterns = [
 	url(r'^deconnexion$', views.deconnexion, name='deconnexion'),
 	url(r'^Film$', views.film, name='film lgdc'),
 	url(r'^Information$', views.info, name='info lgdc'),
+	url(r'^Serie$', views.serie, name='accueil serie'),
 	url(r'^description/(?P<pk>[0-9]+)/$', views.description_edit, name='description_edit'),
+	url(r'^livre/(?P<pk>[0-9]+)/(?P<slug>[-\w]+)$', views.livre_details, name='livre_details'),
 	#url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
 ]

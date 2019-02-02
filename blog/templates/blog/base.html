@@ -1,6 +1,7 @@
+{% load staticfiles %}
 <html>
     <head>
-    <meta name="description" content="Découvrez toute l'info du monde de la guerre des clans en français dès maintenant sur notre site la Guerre des Clans....">
+    <meta name="description" content="{{ resume }}\n Découvrez toute l'info du monde de la guerre des clans en français dès maintenant sur notre site la Guerre des Clans...">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
     <link rel="icon" type="image/png" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
@@ -35,7 +36,7 @@
     margin-left: 9%;
 }
 .margecom {
-    margin-right: 85%;
+    margin-right: 20%;
     margin-left: 10%;
 }
 h4.marge {
@@ -48,8 +49,8 @@ h4.marge {
 	<!--Main Navigation-->
 <header>
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-blue scrolling-navbar">
-        <a class="navbar-brand" href="http://lgdclefilm.pythonanywhere.com/"><strong><i>A LA CROISEE DES ETOILES</i></strong></a>
+    <nav class="navbar fixed-top navbar-expand-xl navbar-dark bg-blue scrolling-navbar">
+        <logo><a href="http://lgdclefilm.pythonanywhere.com/"><img src="{% static 'image/logo.png' %}" alt="logo" height="40"></a></logo>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -60,6 +61,10 @@ h4.marge {
                 </li>
                 {% if film %}<li class="nav-item active"> {% else %}<li class="nav-item"> {% endif %}
                     <a class="nav-link" href="/Film">Film</a>
+                </li>
+				 </li>
+                {% if serie %}<li class="nav-item active"> {% else %}<li class="nav-item"> {% endif %}
+                    <a class="nav-link" href="/Serie">Serie</a>
                 </li>
             </ul>
             <ul class="navbar-nav nav-flex-icons">

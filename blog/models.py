@@ -56,3 +56,26 @@ class Comment(models.Model):
     def __str__(self):
         return self.title
 
+class Livres(models.Model):
+    titre = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=100)
+    couverture = models.CharField(max_length=400, default = 'http://lgdclefilm.pythonanywhere.com/static/image/default_blanket.jpg')
+    quatrieme_de_couverture = models.TextField()
+    description = BBCodeTextField()
+    auteur = models.CharField(max_length=100)
+    date_en = models.CharField(max_length=200, verbose_name="date de parution anglaise")
+    date_fr = models.CharField(max_length=200, verbose_name="date de parution française")
+    cycle = models.ForeignKey('Cycle', on_delete=models.CASCADE)
+    tome = models.CharField(max_length=2, help_text=mark_safe('chiffre entre 1 et 9, pour les HS mettre le numero de parution'))
+	
+    def __str__(self):
+        return self.titre
+
+class Cycle(models.Model):
+    titre = models.CharField(max_length=200)
+    image = models.CharField(max_length=400, default = 'http://lgdclefilm.pythonanywhere.com/static/image/defaut_background.jpg')
+    slogan = models.CharField(max_length=200)
+    color = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.titre
