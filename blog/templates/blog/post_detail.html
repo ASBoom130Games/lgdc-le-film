@@ -22,64 +22,16 @@
             </div>
         {% endif %}
 		
-        <h1>{{ post.title }}</h1>
+        <h1>{{ post.title }}</h1> </div>
 		<center><img src="{{ post.image_lien }}" width="auto" height="370"></center>
 		<p>{{ post.text.rendered|linebreaksbr }}</p>
-    </div>
-<!---------------------------------------------------------------------------------------------------------Commentaires------------------------------------------------------------------------------------------------------------>
-	<hr>	
-<h1>Commentaires</h1>
 
- <div class="card-header border-0 font-weight-bold">{{ len }} commentaires</div>
- </div>
-{% for commentaire in commentaires %}
-<div class="marge">
-<hr>
-
-<p align="right" class="imageflottante">{% if commentaire.author.is_staff %}<span style="color:#bfbf40">Administrateur</span><br>{% endif %}{% if user.is_staff %}<a href="../../admin/blog/comment/" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>{% endif%}</p>
-
-<div class="media">
-{% if commentaire.author.username == "Feuille-de-Menthe" %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/5/52/Feuille-de-Menthe.jpg/revision/latest?cb=20180730203506&path-prefix=fr" width="80px" alt="Avatar">
-{% elif commentaire.author.username == "Nuage_de_Poussiere_d-Etoile" %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/6/60/Nuage_de_Poussiere_d-Etoile.jpg/revision/latest?cb=20180730203734&path-prefix=fr" width="80px" alt="Avatar">
-{% else %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="http://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg" width="80px" alt="Anonyme">
-{% endif %}
-
-<div class="media-body">
-<h4>{{commentaire.author}}</h4>
-{{commentaire.text}}
-</div>
-
-
-</div>
-<div class="margecom">
-                     <div class="card-header border-0 font-weight-bold">
-                                  <li class="list-inline-item pr-2 black-text"><i class="fa fa-clock-o pr-1"></i>{{commentaire.published_date}}</li>
-                    
-            </div>
-</div>	
-</div>
-{% endfor %}
-
-<div class="marge">
-<hr>
-<form method="POST" class="post-form" enctype="multipart/form-data">{% csrf_token %}
-{{ form.as_p }}
-<button type="submit" class="save btn btn-default">Envoyer <i class="fa fa-sign-in ml-1"></i></button>
-</form>
-</div>
+{% include "blog/commentaires.html" %}
 	{% else %}
 
 	  <center><h4> Cette page n'est pas ou plus disponible car elle est en cours de modification </h4></center>
 
-	  </div>
+	 
 	{% endif %}
 </div><!--{% static post.image %}-->
-
-
-
-
-<!--{% static post.image %}-->
 {% endblock %}

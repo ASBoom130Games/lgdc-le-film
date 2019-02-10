@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %} 
+{% load staticfiles %}
+
+{% block header %}   
+Broulllions   
+{% endblock %}
+
+{% block content %}  
+
+<h4 class="marge" >A la Croisée des Etoiles <span class="badge badge-primary"> <i class="fas fa-cog" aria-hidden="true"></i> Administration</span></h4> 
+<p class="marge">Voici tou les broullions du site en attente de publication.
+<br><i class="text-muted">Cette page n'est visible que par les utilisateurs ayant accès a l'Administration</i></p>
+
+<div class="marge">
+<br> <h2><i class="fa fa-newspaper-o" aria-hidden="true"></i> Broullions</h2> 
+
+ <div class="text-center my-5">
+          <!-- News -->
+          <div class="row">
+     {% for post in posts %}
+        {% include "default/slide.html" %}
+{% endfor %}	
+        
+
+    </div>
+
+{% endblock %}

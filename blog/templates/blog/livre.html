@@ -60,5 +60,7 @@
 		</div>
 		<p> {{ livre.description.rendered|linebreaksbr }} </p>
     </div>
-
+	{% if livre.commentaires %}
+{% include "blog/commentaires.html" %}
+{% endif %}
 {% endblock %}

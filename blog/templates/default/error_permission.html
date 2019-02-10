@@ -1,0 +1,61 @@
+<html>
+    <head>
+    <meta name="description" content="{{ resume }}\n Découvrez toute l'info du monde de la guerre des clans en français dès maintenant sur notre site la Guerre des Clans...">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
+    <link rel="icon" type="image/png" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
+    <meta name="viewport" content="width=device-width, maximum-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>A la Croisée des Étoiles - Error</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+      <link rel="stylesheet" id="compiled.css-css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0" type="text/css" media="all">
+     <!--Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://slime-vert.000webhostapp.com/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://slime-vert.000webhostapp.com/css/mdb.min.css" rel="stylesheet">
+	<style>
+	.shadow-textarea textarea.form-control::placeholder {
+    font-weight: 300;
+}
+    textarea {
+    height: 40%;
+	width: 90%;
+}
+	</style>
+	<style>
+.imageflottante
+{
+    float: right;
+}
+.marge {
+    margin-right: 9%;
+    margin-left: 9%;
+}
+.margecom {
+    margin-right: 20%;
+    margin-left: 10%;
+}
+h4.marge {
+    margin-left: 50px;
+}
+  </style>
+    </head>
+	<!--------------------------------------------------------Fin header------------------------------------------------------------------------------------------>
+<body class="peach-gradient">
+  <div style="height: 100vh">
+    <div class="flex-center flex-column">
+
+      <h1 class="text-hide animated fadeIn mb-4"><i class="{%if post.Publique == False %}fa fa-lock{% else %}fa fa-warning{% endif %}" style="font-size:180px;color:white"></i></h1>
+      <center><h5 class="animated fadeIn mb-3 text-white">Vous ne pouvez pas accéder à cette page car vous n'avez pas les droits nécessaires.</h5></center>
+
+      <p class="animated fadeIn text-white-50">L'administration</p><br>
+	  <p class="animated fadeIn text-white-50"><a href="/"><button type="button" class="btn btn-outline-light waves-effect">Accueil</button></a>
+	                                           {% if user.is_staff %}<a href="{% url 'post_edit' pk=post.pk %}"><button type="button" class="btn btn-danger btn-rounded">Admin : Modifier l'article</button></a></p>{% endif %}
+    </div>
+  </div>
+ </body>
+</html>

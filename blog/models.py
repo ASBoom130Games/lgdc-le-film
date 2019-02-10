@@ -46,7 +46,8 @@ class Comment(models.Model):
             default=timezone.now)
     published_date = models.DateTimeField(
             blank=True, null=True)
-    article = models.ForeignKey('Post', on_delete=models.CASCADE)
+    article = models.ForeignKey('Post', on_delete=models.CASCADE, null=True)
+    livre = models.ForeignKey('Livres', on_delete=models.CASCADE, null=True)
     admin = models.BooleanField(default=False)
 
     def publish(self):
@@ -67,6 +68,7 @@ class Livres(models.Model):
     date_fr = models.CharField(max_length=200, verbose_name="date de parution française")
     cycle = models.ForeignKey('Cycle', on_delete=models.CASCADE)
     tome = models.CharField(max_length=2, help_text=mark_safe('chiffre entre 1 et 9, pour les HS mettre le numero de parution'))
+    commentaires = models.BooleanField(default=False)
 	
     def __str__(self):
         return self.titre

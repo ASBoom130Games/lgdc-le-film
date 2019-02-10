@@ -14,6 +14,7 @@ def post_list(request):
     error = False
     errormdp = False
     home = True
+    drafts = posts.filter(Publique=False)
     if request.method == "POST":
          form = ConnexionForm(request.POST)
          new = InscriptionForm(request.POST)
@@ -44,41 +45,43 @@ def post_list(request):
     else:
          form = ConnexionForm(request.POST)
          new = InscriptionForm(request.POST)
-    return render(request, 'blog/post_list.html', {'posts': posts, 'form' : form, 'error':error, 'new' : new, 'errormdp' : errormdp, 'home':home})
+    return render(request, 'blog/post_list.html', {'posts': posts, 'form' : form, 'error':error, 'new' : new, 'errormdp' : errormdp, 'home':home, 'drafts':drafts})
 	
 def google(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
 
 def post_detail(request, pk):
     home = False
-    for perso in User.objects.filter(username='Anonyme'):
-	    lol = perso
     post = get_object_or_404(Post, pk=pk)
-    commentaires = Comment.objects.filter(article__title=post.title)
-    len = commentaires.count ()
-    resume = Truncator(post.text).chars(40, truncate='...')
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            art = post.title
-            comment = form.save(commit=False)
-            if request.user.is_authenticated:
-                comment.author = request.user
-            else:
-                comment.author=lol
-            comment.title = request.user
-            comment.created_date=timezone.now()
-            comment.published_date=timezone.now()
-            comment.article=post
+    if post.Publique :   
+        for perso in User.objects.filter(username='Anonyme'):
+	        lol = perso
+        commentaires = Comment.objects.filter(article__title=post.title)
+        len = commentaires.count ()
+        resume = Truncator(post.text).chars(40, truncate='...')
+        if request.method == "POST":
+        	form = CommentForm(request.POST)
+        	if form.is_valid():
+        	    article = post.title
+        	    comment = form.save(commit=False)
+        	    if request.user.is_authenticated:
+        	        comment.author = request.user
+        	    else:
+        	        comment.author=lol
+        	    comment.title = request.user
+        	    comment.created_date=timezone.now()
+        	    comment.published_date=timezone.now()
+        	    comment.article=post
             #if request.user.is_staff():
             #    comment.admin = True
             #else:
             #    comment.admin = False
-            comment.save()
-    else:
-        form = CommentForm(request.POST)
-		 
-    return render(request, 'blog/post_detail.html', {'post': post, 'form': form, 'commentaires':commentaires, 'len':len, 'resume':resume})
+        	    comment.save()
+        else:
+            form = CommentForm() 
+        return render(request, 'blog/post_detail.html', {'post': post, 'form': form, 'commentaires':commentaires, 'len':len, 'resume':resume})
+    else :
+        return render(request, 'default/error_permission.html', {'post': post})
 
 def post_new(request):
     height = 460
@@ -152,4 +155,74 @@ def serie(request):
 
 def livre_details(request, pk, slug):
     livre = get_object_or_404(Livres, pk=pk)
-    return render(request, 'blog/livre.html', {'livre': livre})	
+    for perso in User.objects.filter(username='Anonyme'):
+        lol = perso
+    commentaires = Comment.objects.filter(livre__titre=livre.titre)
+    len = commentaires.count ()
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            book = livre
+            comment = form.save(commit=False)
+            if request.user.is_authenticated:
+                comment.author = request.user
+            else:
+                comment.author=lol
+            comment.title = request.user
+            comment.created_date=timezone.now()
+            comment.published_date=timezone.now()
+            comment.livre=book
+            comment.save()
+    else:
+        form = CommentForm() 
+			
+    return render(request, 'blog/livre.html', {'livre': livre , 'commentaires':commentaires, 'len':len, 'form': form})	
+
+def brouillons(request):
+    if request.user.is_staff :
+        posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+        posts = posts.filter(Publique=False)
+        return render(request, 'blog/broullion.html', {'posts': posts})	
+    else :
+        return render(request, 'default/error_permission.html')	
+
+def connexion(request):
+    nobr = True
+    error = False
+    if request.method == "POST":
+          form = ConnexionForm(request.POST)
+          if form.is_valid():
+               name = request.POST.get('username')
+               password = request.POST.get('password')
+               user = authenticate(username=name, password=password)  # Nous vérifions si les données sont correctes
+               if user:  # Si l'objet renvoyé n'est pas None
+                    login(request, user)  # nous connectons l'utilisateur
+                    return redirect('post_list')
+               else: # sinon une erreur sera affichée
+                   error = True
+    else:
+         form = ConnexionForm()
+    return render(request, 'default/authentification.html', {'form': form, 'nobr':nobr, 'error':error})	
+
+def inscription(request):
+    nobr = True
+    errormdp = False
+    if request.method == "POST":
+        new = InscriptionForm(request.POST)
+        if new.is_valid():
+            nom = request.POST.get('username')
+            email = request.POST.get('email')
+            mdp = request.POST.get('password')
+            mdp2 = request.POST.get('password2')
+              
+            if mdp == mdp2:  # Si les mots de passes sont correctes
+                nouveau = User.objects.create_user(nom, email, mdp)
+                nouveau.is_staff = False
+                nouveau.is_superuser = False
+                nouveau.save()
+                login(request, nouveau) 
+            else:
+                errormdp = True
+    else:
+        new = InscriptionForm()
+    return render(request, 'default/inscription.html', {'new': new, 'nobr':nobr, 'errormdp':errormdp})	

@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <html>
     <head>
-    <meta name="description" content="{{ resume }}\n Découvrez toute l'info du monde de la guerre des clans en français dès maintenant sur notre site la Guerre des Clans...">
+    <meta name="description" content="{{ resume }} Découvrez toute l'info du monde de la guerre des clans en français dès maintenant sur notre site la Guerre des Clans...">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
     <link rel="icon" type="image/png" href="https://d31a58x7uhna8i.cloudfront.net/wp-content/uploads/2017/05/19162242/1-24.png">
@@ -12,11 +12,42 @@
 
       {% block head %}{% endblock %} <link rel="stylesheet" id="compiled.css-css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/compiled.min.css?ver=4.4.0" type="text/css" media="all">
      <!--Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
     <!-- Bootstrap core CSS -->
     <link href="https://slime-vert.000webhostapp.com/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://slime-vert.000webhostapp.com/css/mdb.min.css" rel="stylesheet">
+	  <style type="text/css">
+    html,
+    body,
+    .view {
+      height: 100%;
+    }
+
+    @media (max-width: 740px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 1000px;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+      html,
+      body,
+      header,
+      .view {
+        height: 650px;
+      }
+    }
+    @media (min-width: 800px) and (max-width: 850px) {
+              .navbar:not(.top-nav-collapse) {
+                  background: #1C2331!important;
+              }
+          }
+  </style>
 	<style>
 	.shadow-textarea textarea.form-control::placeholder {
     font-weight: 300;
@@ -47,9 +78,11 @@ h4.marge {
 	<!--------------------------------------------------------Fin header------------------------------------------------------------------------------------------>
     <body>
 	<!--Main Navigation-->
-<header>
-
-    <nav class="navbar fixed-top navbar-expand-xl navbar-dark bg-blue scrolling-navbar">
+{% if nobr %}
+{% else %}
+	<header>
+{%endif %}
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-blue scrolling-navbar">
         <logo><a href="http://lgdclefilm.pythonanywhere.com/"><img src="{% static 'image/logo.png' %}" alt="logo" height="40"></a></logo>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -57,7 +90,7 @@ h4.marge {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 {% if home %}<li class="nav-item active"> {% else %}<li class="nav-item"> {% endif %}
-                    <a class="nav-link" href="http://lgdclefilm.pythonanywhere.com/">Accueil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 {% if film %}<li class="nav-item active"> {% else %}<li class="nav-item"> {% endif %}
                     <a class="nav-link" href="/Film">Film</a>
@@ -85,11 +118,15 @@ h4.marge {
     </nav>
 
 </header>
+<body>
 <!--Main Navigation-->
+{% if nobr %}
+{% else %}
 <br>
 <br>
 <br>
-{% include "blog/Déconnexion.html" %}
+{% endif %}
+{% include "default/Déconnexion.html" %}
 	{% block content %}
     {% endblock %}
 <script type="text/javascript" src="https://mdbootstrap.com/previews/docs/latest/js/compiled.min.js"></script>

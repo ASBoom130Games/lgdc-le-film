@@ -14,5 +14,8 @@ urlpatterns = [
 	url(r'^Serie$', views.serie, name='accueil serie'),
 	url(r'^description/(?P<pk>[0-9]+)/$', views.description_edit, name='description_edit'),
 	url(r'^livre/(?P<pk>[0-9]+)/(?P<slug>[-\w]+)$', views.livre_details, name='livre_details'),
+    url(r'^brouillons/$', views.brouillons, name='livre_details'),
+    url(r'^connexion/$', views.connexion, name='connexion'),
+    url(r'^inscription/$', views.inscription, name='inscription'),
 	#url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
 ]
