@@ -189,31 +189,40 @@ def serie(request):
     return render(request, 'blog/serie.html', {'posts': posts, 'description':description, 'serie':serie, 'cycle':cycle, 'livres':livres, 'resume':resume, 'profil':profil})
 
 def livre_details(request, pk, slug):
-    livre = get_object_or_404(Livres, pk=pk)
-    for perso in User.objects.filter(username='Anonyme'):
-        lol = perso
-    commentaires = Comment.objects.filter(livre__titre=livre.titre)
-    len = commentaires.count ()
-    if request.method == "POST":
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            book = livre
-            comment = form.save(commit=False)
-            if request.user.is_authenticated:
-                comment.author = request.user
-            else:
-                comment.author=lol
-            comment.title = request.user
-            comment.created_date=timezone.now()
-            comment.published_date=timezone.now()
-            comment.livre=book
-            comment.save()
-    else:
-        form = CommentForm() 
+	com_profil = Profil.objects.all
+	livre = get_object_or_404(Livres, pk=pk)
+	for perso in User.objects.filter(username='Anonyme'):
+		lol = perso
+	if request.user.is_authenticated:
+		profil = get_object_or_404(Profil, author=request.user)
+	else:
+		profil = lol
+	commentaires = Comment.objects.filter(livre__titre=livre.titre)
+	len = commentaires.count ()
+	if request.method == "POST":
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			book = livre
+			comment = form.save(commit=False)
+			if request.user.is_authenticated:
+				comment.author = request.user
+			else:
+				comment.author=lol
+			comment.title = request.user
+			comment.created_date=timezone.now()
+			comment.published_date=timezone.now()
+			comment.livre=book
+			comment.save()
+	else:
+		form = CommentForm() 
 			
-    return render(request, 'blog/livre.html', {'livre': livre , 'commentaires':commentaires, 'len':len, 'form': form})	
+	return render(request, 'blog/livre.html', {'livre': livre , 'commentaires':commentaires, 'len':len, 'form': form, 'profil':profil, 'com_profil':com_profil})	
 
 def brouillons(request):
+    if request.user.is_authenticated:
+        profil = get_object_or_404(Profil, author=request.user)
+    else:
+        profil = 0
     if request.user.is_staff :
         posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
         posts = posts.filter(Publique=False)
@@ -222,6 +231,10 @@ def brouillons(request):
         return render(request, 'default/error_permission.html')	
 
 def connexion(request):
+    if request.user.is_authenticated:
+        profil = get_object_or_404(Profil, author=request.user)
+    else:
+        profil = 0
     nobr = True
     error = False
     if request.method == "POST":
