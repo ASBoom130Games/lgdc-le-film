@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^brouillons/$', views.brouillons, name='livre_details'),
     url(r'^connexion/$', views.connexion, name='connexion'),
     url(r'^inscription/$', views.inscription, name='inscription'),
+    url(r'^profil/$', views.profil, name='user_settings'),
 	#url(r'^.*$', RedirectView.as_view(url='/', permanent=False), name='index')
 ]

@@ -1,3 +1,19 @@
+<script type="text/javascript">
+
+
+    $(function(){
+      
+$( 'button[type=button]' ).on('click', function(){
+            var cursorPos = $('#text').prop('selectionStart');
+            var v = $('#text').val();
+            var textBefore = v.substring(0,  cursorPos );
+            var textAfter  = v.substring( cursorPos, v.length );
+            $('#text').val( textBefore+"["+ $(this).val() +"]"+"[/"+ $(this).val() +"]"+textAfter );
+        });
+
+    });
+
+</script>
 <!---------------------------------------------------------------------------------------------------------Commentaires------------------------------------------------------------------------------------------------------------>
 	<hr>	
 <h1>Commentaires</h1>
@@ -11,17 +27,10 @@
 <p align="right" class="imageflottante">{% if commentaire.author.is_staff %}<span style="color:#bfbf40">Administrateur</span><br>{% endif %}{% if user.is_staff %}<a href="../../admin/blog/comment/" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>{% endif%}</p>
 
 <div class="media">
-{% if commentaire.author.username == "Feuille-de-Menthe" %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/5/52/Feuille-de-Menthe.jpg/revision/latest?cb=20180730203506&path-prefix=fr" width="80px" alt="Avatar">
-{% elif commentaire.author.username == "Nuage_de_Poussiere_d-Etoile" %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/6/60/Nuage_de_Poussiere_d-Etoile.jpg/revision/latest?cb=20180730203734&path-prefix=fr" width="80px" alt="Avatar">
-{% else %}
-<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="http://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg" width="80px" alt="Anonyme">
-{% endif %}
-
+<img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="{% for prof in com_profil %}{% if prof.author == commentaire.author %}{{ prof.image_lien }}{% endif %}{% endfor %}" width="80px" alt="Avatar">
 <div class="media-body">
 <h4>{{commentaire.author}}</h4>
-{{commentaire.text}}
+{{commentaire.text.rendered|linebreaksbr }}
 </div>
 
 
@@ -41,23 +50,23 @@
 
   <div class="card-header border-0 font-weight-bold">Laisser un commentaire</div>
 <form method="POST" enctype="multipart/form-data" width="80%" >{% csrf_token %}
-  <div class="d-md-flex flex-md-fill mt-4 px-1">
+	  
+   <div style="margin-left: 9%;"> 
+  <button type="button" class="save btn btn-default" value="b"><i class="fas fa-bold"></i></button>
+    <button type="button" class="save btn btn-default" value="i"><i class="fas fa-italic"></i></button><br></div>
+<div class="d-md-flex flex-md-fill mt-4 px-1">
     <div class="d-flex justify-content-center mr-md-5">
-      {% if user.username == "Feuille-de-Menthe" %}
-<img class="card-img-100 z-depth-1 mb-4" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/5/52/Feuille-de-Menthe.jpg/revision/latest?cb=20180730203506&path-prefix=fr" alt="Avatar">
-{% elif user.username == "Nuage_de_Poussiere_d-Etoile" %}
-<img class="card-img-100 z-depth-1 mb-4" src="https://vignette.wikia.nocookie.net/les-geek-du-3879/images/6/60/Nuage_de_Poussiere_d-Etoile.jpg/revision/latest?cb=20180730203734&path-prefix=fr" alt="Avatar">
-{% else %}
-<img class="card-img-100 z-depth-1 mb-4" src="http://bestnycacupuncturist.com/wp-content/uploads/2016/11/anonymous-avatar-sm.jpg" alt="Anonyme">
-{% endif %}
+<img class="card-img-100 z-depth-1 mb-4" src="{{ profil.image_lien }}" alt="Avatar">
     </div>
-    {% for field in form %}
+    {% for field in form %} 
     {{ field }}
 {% endfor %}
   </div>
   <div class="text-center mt-4">
-    <button type="submit" class="save btn btn-default">Envoyer <i class="fa fa-sign-in ml-1"></i></button>
+    <button type="submit" class="save btn btn-default">Envoyer <i class="fa fa-sign-in-alt ml-1"></i></button>
+	
   </div>
 </form>
 </section>
 </div>
+

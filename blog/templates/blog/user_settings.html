@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{ %  load  bbcode_tags  % }
+
+{% block header %}   
+profil 
+{% endblock %}
+
+{% block content %}
+<body class="fixed-sn mdb-skin-custom grey lighten-3" data-spy="scroll" data-target="#scrollspy" data-offset="15" aria-busy="true">
+        <main class="mt-5 pt-5">
+              <div class="container">
+			            <section class="mt-4">
+
+                <!--Grid row-->
+                <div class="row d-flex justify-content-center">
+                                 
+
+                            <div class="text-center col-md-6 wow fadeIn">
+
+                            <div class="modal-dialog modal-notify cascading-modal modal-avatar" role="document">
+							          <!--Content-->
+          <div class="modal-content">
+
+            <!--Header-->
+            <div class="modal-header">
+              <img src="{{ profil.image_lien }}" alt="avatar" class="rounded-circle img-responsive">
+			  </div>
+            <!--Body-->
+            <div class="modal-body text-center">
+               <div class="text-center">
+                {% include "default/profil_form.html" %}
+              </div>
+              <h5 class="mt-1 mb-2">{{ user.username }}</h5>
+
+              <div class="text-center mt-4">
+			  <i class="fas fa-at"></i> {{ user.email }}
+			  </div>
+
+
+            </div>
+
+          </div>
+          <!--/.Content-->
+        </div>
+
+                        </div>
+
+                       
+                        <!--/.Featured Image-->
+					</div>
+		      </div>
+			  </section>
+					</div>	
+         </main>
+{% endblock %}
